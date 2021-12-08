@@ -891,6 +891,12 @@ long long dram_init(struct ddr_info *priv)
 	time = get_timer_val(time_base);
 	INFO("Time before programming controller %lu ms\n", time);
 	debug("Program controller registers\n");
+
+	//fix for MEM_PLL_RAT 2100
+        priv->ddr_reg.wrlvl_cntl[0] = 0x86750607;
+        priv->ddr_reg.wrlvl_cntl[1] = 0x08090A0B,
+        priv->ddr_reg.wrlvl_cntl[2] = 0x0D0E0F0C,
+
 	ret = write_ddrc_regs(priv);
 	if (ret) {
 		ERROR("Programing DDRC error\n");
